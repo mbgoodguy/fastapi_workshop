@@ -1,4 +1,5 @@
 from datetime import date
+from decimal import Decimal
 from enum import Enum
 from typing import Optional
 
@@ -10,9 +11,23 @@ class OperationKind(str, Enum):
     OUTCOME = 'outcome'
 
 
-class Operation(BaseModel):
-    id: int
-    data: date
+class BaseOperation(BaseModel):
+    date: date
     kind: OperationKind
-    description: str
-    amount: Optional[str]
+    amount: Decimal
+    description: Optional[str]
+
+
+class OperationCreate(BaseOperation):
+    pass
+
+
+class OperationUpdate(BaseOperation):
+    pass
+
+
+class Operation(BaseOperation):
+    id: int
+
+    class Config:
+        orm_mode = True
