@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings
 # соотв-щими этим полям. Далее оттуда они достаются, валидируются и преобразуются в нужные.
 class Settings(BaseSettings):
     server_host: str = '127.0.0.1'
-    server_port: int = '7000'
+    server_port: int = '8000'
     database_url: str
 
 
