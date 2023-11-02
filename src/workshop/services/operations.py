@@ -3,7 +3,7 @@ from typing import List
 from fastapi import Depends
 
 from workshop import tables
-from workshop.database import Session, get_session
+from workshop.database import get_session, Session
 
 
 class OperationService:
@@ -11,7 +11,6 @@ class OperationService:
         self.session = session
 
     def get_list(self) -> List[tables.Operation]:
-        # перенесли сюда логику из api/operations
         operations = (
             self.session
             .query(tables.Operation)
