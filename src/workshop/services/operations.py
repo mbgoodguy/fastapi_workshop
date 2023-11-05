@@ -1,10 +1,11 @@
 from typing import List
 
-from fastapi import Depends
+from fastapi import Depends, HTTPException
+from starlette import status
 
 from workshop import tables
 from workshop.database import get_session, Session
-from workshop.models.operations import OperationKind, Operation, OperationCreate
+from workshop.models.operations import OperationKind, OperationCreate
 
 
 class OperationService:
@@ -23,3 +24,15 @@ class OperationService:
         self.session.add(operation)
         self.session.commit()
         return operation
+
+    def get_operation(self, operation_id: int) -> tables.Operation:
+        operation = (
+            self.session
+            .query(tables.Operation)
+            .filter_by(id=operation_id)
+            .first()
+        )
+        if not operation:
+            raise HTTPException(status_code=404, detail=f'No operation with id {operation_id}')
+        return operation
+r
